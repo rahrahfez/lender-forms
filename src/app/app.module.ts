@@ -1,14 +1,47 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import { RouterModule } from '@angular/router';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from 'angularfire2';
 
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { SubmitFormComponent } from './submit-form/submit-form.component';
+import { LoginComponent } from './login/login.component';
+import { reducers, metaReducers } from './reducers';
+import { routes } from './routes.module';
+import { DisplayUsersComponent } from './display-users/display-users.component';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SubmitFormComponent,
+    LoginComponent,
+    DisplayUsersComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.config),
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    RouterModule.forRoot(routes),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
   bootstrap: [AppComponent]

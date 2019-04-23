@@ -1,0 +1,13 @@
+<section class="form-section">
+  <form class="form-input" [formGroup]="myForm">
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" formControlName="password" type="password">
+    </mat-form-field>
+  </form>
+  <a >
+    <button class="submit-btn" mat-raised-button color="primary" (click)="onLogin()">Login</button>
+  </a>
+</section>

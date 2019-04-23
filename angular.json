@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "LenderForms"
+  "defaultProject": "LenderForms",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
