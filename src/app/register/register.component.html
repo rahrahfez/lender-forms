@@ -1,0 +1,22 @@
+<section class="register-section container">
+  <mat-card class="register-card">
+    <mat-card-title>Register</mat-card-title>
+      <form class="form-input" [formGroup]="registerForm">
+          <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Password" formControlName="password" type="password">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password">
+          </mat-form-field>
+        </form>
+        <a >
+          <button class="submit-btn" mat-raised-button color="primary" (click)="onRegister()">Submit</button>
+        </a>
+  </mat-card>
+</section>

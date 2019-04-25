@@ -1,4 +1,4 @@
-.form-section {
+.register-section {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,7 @@
     width: 5rem;
 }
 
-.login-card {
+.register-card {
     background-color: #eee;
     box-shadow: .4rem .4rem 1rem rgba(0, 0, 0, .2);
     padding: 3rem;

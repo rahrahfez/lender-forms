@@ -6,12 +6,17 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
+import { 
+  MatInputModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatCardModule,
+  MatToolbarModule
+ } from '@angular/material';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -20,6 +25,8 @@ import { LoginComponent } from './login/login.component';
 import { reducers, metaReducers } from './reducers';
 import { routes } from './routes.module';
 import { DisplayUsersComponent } from './display-users/display-users.component';
+import { HeaderComponent } from './header/header.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -28,17 +35,22 @@ import { DisplayUsersComponent } from './display-users/display-users.component';
     AppComponent,
     SubmitFormComponent,
     LoginComponent,
-    DisplayUsersComponent
+    DisplayUsersComponent,
+    HeaderComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.config),
+    AngularFireAuthModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     RouterModule.forRoot(routes),
     !environment.production ? StoreDevtoolsModule.instrument() : []

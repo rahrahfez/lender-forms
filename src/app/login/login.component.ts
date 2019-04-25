@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { AppState } from '../reducers';
 import { Login } from '../auth/auth.actions';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { Login } from '../auth/auth.actions';
 })
 export class LoginComponent implements OnInit {
   myForm: FormGroup;
+  user: User;
 
   constructor(private afs: AngularFirestore, 
               private fb: FormBuilder, 
@@ -22,13 +24,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = this.fb.group({
-      username: ['user1', Validators.required],
-      password: ['password', Validators.required]
+      username: [''],
+      password: ['']
     })
   }
 
   onLogin() {
-    this.store.dispatch(new Login());
+
+    this.store.dispatch(new Login(this.user));
+
+    console.log(this.user);
+  }
+
+  get username() {
+    return this.myForm.get('username');
+  }
+
+  get password() {
+    return this.myForm.get('password');
   }
 
 }
