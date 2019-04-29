@@ -27,6 +27,8 @@ import { routes } from './routes.module';
 import { DisplayUsersComponent } from './display-users/display-users.component';
 import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './register/register.component';
+import { ApplicationFormComponent } from './application-form/application-form.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 
@@ -37,7 +39,9 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     DisplayUsersComponent,
     HeaderComponent,
-    RegisterComponent
+    RegisterComponent,
+    ApplicationFormComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

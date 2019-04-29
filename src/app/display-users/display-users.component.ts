@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+
 import { AppState } from '../reducers';
 
 @Component({
@@ -10,13 +11,13 @@ import { AppState } from '../reducers';
   styleUrls: ['./display-users.component.css']
 })
 export class DisplayUsersComponent implements OnInit {
-  userRef = this.afs.collection('users');
-  users$: Observable<any>;
+  applicationRef = this.afs.collection('applications');
+  application$: Observable<any>;
   
   constructor(private afs: AngularFirestore, private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.users$ = this.userRef.valueChanges();
+    this.application$ = this.applicationRef.valueChanges();
   }
 
 }

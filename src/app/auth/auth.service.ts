@@ -27,11 +27,16 @@ export class AuthService {
   }
 
   signUp(email: string, password: string) {
-    this.afAuth
+      this.afAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(
         val => {
+          this.afs.collection('users').add({
+            uid: '1',
+            email: 'tester@test.com',
+            displayName: 'tester'
+          })
           console.log(val)
         })
       .catch(
@@ -41,22 +46,11 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    this.afAuth
-      .auth
-      .signInWithEmailAndPassword(email, password)
-      .then(
-        () =>
-           console.log('Login successful')
-      )
-      .catch(
-        err =>
-          console.log('Login unsuccessful', err.message)
-      )
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+
   }
 
   logout() {
-    this.afAuth
-      .auth
-      .signOut()
+    this.afAuth.auth.signOut()
   }
 }

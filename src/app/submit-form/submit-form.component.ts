@@ -16,8 +16,8 @@ export class SubmitFormComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required]
+      firstName: [''],
+      lastName: ['']
     })
   }
 
@@ -25,8 +25,7 @@ export class SubmitFormComponent implements OnInit {
     const formValue = this.myForm.value;
 
     try {
-      await this.afs.collection('users').add(formValue);
-      this.myForm.reset();
+      await this.afs.collection('applications').add(formValue);
       console.log(formValue);
     } catch(err) {
       console.log(err)

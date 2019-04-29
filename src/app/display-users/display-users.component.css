@@ -1,0 +1,13 @@
+.app-list {
+    list-style: none;
+}
+
+.app-header {
+    margin-left: 5rem;
+}
+
+.user-card {
+    width: 40%;
+    background-color: #eee;
+    margin-bottom: .6rem;
+}

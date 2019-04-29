@@ -5,8 +5,6 @@ import { User } from '../models/user.model';
 export enum AuthActionTypes {
   LoginAction = '[Login] Action',
   LogoutAction = '[Logout] Action',
-  
-  
 }
 
 export class Login implements Action {

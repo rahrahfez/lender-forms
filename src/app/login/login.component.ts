@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { Login } from '../auth/auth.actions';
 import { User } from '../models/user.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(private afs: AngularFirestore, 
               private fb: FormBuilder, 
               private router: Router,
-              private store: Store<AppState>) { }
+              private store: Store<AppState>,
+              private auth: AuthService) { }
 
   ngOnInit() {
     this.myForm = this.fb.group({
@@ -30,10 +32,19 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-
-    this.store.dispatch(new Login(this.user));
-
-    console.log(this.user);
+    const val = this.myForm.value;
+    this.auth.login(val.username, val.password)
+    .then(
+      (user) => {
+        this.store.dispatch(new Login(user.user));
+        this.router.navigate(['/form'])
+        console.log('Login successful')
+      }
+    )
+    .catch(
+      () =>
+        alert('Login unsuccessful')
+    );
   }
 
   get username() {
