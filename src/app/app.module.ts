@@ -30,6 +30,7 @@ import { RegisterComponent } from './register/register.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { ChatComponent } from './chat/chat.component';
 import * as fromAuth from './auth/auth.reducer';
+import { AuthGuard } from './auth/auth.guard';
 
 
 
@@ -61,7 +62,7 @@ import * as fromAuth from './auth/auth.reducer';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature('auth', fromAuth.authReducer)
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

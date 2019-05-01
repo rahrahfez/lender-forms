@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
@@ -26,72 +24,76 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router,
     private store: Store<AppState>
-  ) { 
-    this.user$ = this.afAuth.authState
-      .pipe(
-        switchMap(user => {
-          if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-          } else {
-            return of(null)
-          }
-        })
-      )
+  ) {
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${user.uid}`
+    );
 
     const data: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName
-    }
+    };
 
-    return userRef.set(data)
+    return userRef.set(data);
   }
 
-  signUp(email: string, password: string, _displayName: string) {
-      this.afAuth
-      .auth
+  signUp(email: string, password: string, displayName?: string) {
+    this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(
-        (credential) => {
-          this.afs.collection('users').doc(credential.user.uid).set({
+      .then(credential => {
+        this.afs
+          .collection('users')
+          .doc(credential.user.uid)
+          .set({
             uid: credential.user.uid,
             email: credential.user.email,
-            displayName: _displayName
+            displayName: displayName
+          });
+        this.store.dispatch(
+          new Login({
+            uid: credential.user.uid,
+            email: credential.user.email,
+            displayName: displayName
           })
-          this.store.dispatch(new Login({ uid: credential.user.uid, email: credential.user.email, displayName: _displayName }))
-          this.router.navigate(['/form'])
-        })
-      .catch(
-        err => {
-          console.log('Error', err.message)
-        })
+        );
+        this.router.navigate(['/form']);
+      })
+      .catch(err => {
+        console.log('Error', err.message);
+      });
   }
 
   login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    .then(
-      (credential) => {
-        this.updateUserData(credential.user)
-        const docRef = this.afs.collection('users').doc(credential.user.uid).get()
-        
-        this.store.dispatch(new Login({ uid: credential.user.uid, email: credential.user.email }))
-        this.router.navigate(['/form'])
-        console.log('Login successful')
-      }
-    )
-    .catch(
-      () =>
-        alert('Login unsuccessful')
-    );
+    this.afAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(credential => {
+        this.updateUserData(credential.user);
+
+        this.store.dispatch(
+          new Login({ uid: credential.user.uid, email: credential.user.email })
+        );
+        this.router.navigate(['/form']);
+        console.log('Login successful');
+      })
+      .catch(() => alert('Login unsuccessful'));
   }
 
   logout() {
-    this.store.dispatch(new Logout())
-    this.afAuth.auth.signOut()
-    alert('Logout successful')
+    this.store.dispatch(new Logout());
+    this.afAuth.auth.signOut();
+    alert('Logout successful');
   }
 }

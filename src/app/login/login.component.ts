@@ -11,28 +11,18 @@ import { AuthService } from '../auth/auth.service';
 export class LoginComponent implements OnInit {
   myForm: FormGroup;
 
-  constructor(private fb: FormBuilder, 
-              private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService) {}
 
   ngOnInit() {
     this.myForm = this.fb.group({
       username: [''],
       password: ['']
-    })
+    });
   }
 
   onLogin() {
     const val = this.myForm.value;
     this.auth.login(val.username, val.password);
-
-  }
-
-  get username() {
-    return this.myForm.get('username');
-  }
-
-  get password() {
-    return this.myForm.get('password');
   }
 
 }
