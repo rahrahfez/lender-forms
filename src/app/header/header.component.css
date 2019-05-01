@@ -5,6 +5,11 @@
 
 .login-link {
     cursor: pointer;
+    margin-right: 1rem;
+}
+
+.logout-btn {
+    cursor: pointer;
     margin-right: 3rem;
 }
 

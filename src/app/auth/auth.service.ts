@@ -7,7 +7,10 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
 
+import { Login, Logout } from '../auth/auth.actions';
+import { AppState } from '../reducers';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user.model';
@@ -21,23 +24,46 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) { 
-    this.user$ = this.afAuth.authState;
+    this.user$ = this.afAuth.authState
+      .pipe(
+        switchMap(user => {
+          if (user) {
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+          } else {
+            return of(null)
+          }
+        })
+      )
   }
 
-  signUp(email: string, password: string) {
+  updateUserData(user: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
+    const data: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName
+    }
+
+    return userRef.set(data)
+  }
+
+  signUp(email: string, password: string, _displayName: string) {
       this.afAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(
-        val => {
-          this.afs.collection('users').add({
-            uid: '1',
-            email: 'tester@test.com',
-            displayName: 'tester'
+        (credential) => {
+          this.afs.collection('users').doc(credential.user.uid).set({
+            uid: credential.user.uid,
+            email: credential.user.email,
+            displayName: _displayName
           })
-          console.log(val)
+          this.store.dispatch(new Login({ uid: credential.user.uid, email: credential.user.email, displayName: _displayName }))
+          this.router.navigate(['/form'])
         })
       .catch(
         err => {
@@ -46,11 +72,26 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-
+    this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    .then(
+      (credential) => {
+        this.updateUserData(credential.user)
+        const docRef = this.afs.collection('users').doc(credential.user.uid).get()
+        
+        this.store.dispatch(new Login({ uid: credential.user.uid, email: credential.user.email }))
+        this.router.navigate(['/form'])
+        console.log('Login successful')
+      }
+    )
+    .catch(
+      () =>
+        alert('Login unsuccessful')
+    );
   }
 
   logout() {
+    this.store.dispatch(new Logout())
     this.afAuth.auth.signOut()
+    alert('Logout successful')
   }
 }

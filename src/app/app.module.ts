@@ -29,6 +29,7 @@ import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './register/register.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { ChatComponent } from './chat/chat.component';
+import * as fromAuth from './auth/auth.reducer';
 
 
 
@@ -57,7 +58,8 @@ import { ChatComponent } from './chat/chat.component';
     MatToolbarModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     RouterModule.forRoot(routes),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forFeature('auth', fromAuth.authReducer)
   ],
   providers: [],
   bootstrap: [AppComponent]
