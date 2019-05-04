@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +12,12 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  constructor(private router: Router, public auth: AuthService) {}
 
-  constructor(private router: Router, private auth: AuthService) { }
+
 
   ngOnInit() {
+
   }
 
   registerNewUser() {

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { selectAuthState, isLoggedIn, isLoggedOut } from './auth/auth.selector';
-import { AuthState } from './auth/auth.reducer';
+
+import { isLoggedIn, isLoggedOut } from './auth/auth.selector';
+
 
 @Component({
   selector: 'app-root',

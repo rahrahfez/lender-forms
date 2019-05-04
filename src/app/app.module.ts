@@ -6,7 +6,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
 
-import { 
+import {
   MatInputModule,
   MatButtonModule,
   MatFormFieldModule,
@@ -31,6 +31,9 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { ChatComponent } from './chat/chat.component';
 import * as fromAuth from './auth/auth.reducer';
 import { AuthGuard } from './auth/auth.guard';
+import { TasksComponent } from './tasks/tasks.component';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/auth.effects';
 
 
 
@@ -43,7 +46,8 @@ import { AuthGuard } from './auth/auth.guard';
     HeaderComponent,
     RegisterComponent,
     ApplicationFormComponent,
-    ChatComponent
+    ChatComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,9 @@ import { AuthGuard } from './auth/auth.guard';
     StoreModule.forRoot(reducers, { metaReducers }),
     RouterModule.forRoot(routes),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreModule.forFeature('auth', fromAuth.authReducer)
+    StoreModule.forFeature('auth', fromAuth.authReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([AuthEffects])
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

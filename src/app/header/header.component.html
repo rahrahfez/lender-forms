@@ -4,12 +4,12 @@
 
         <span class="fill-empty-space"></span>
 
-        <ng-template [ngIf]="true">
+        <ng-template [ngIf]="!(loggedInStatus | async)">
             <span class="register-btn" (click)="registerNewUser()">Register</span>
             <span class="login-btn" (click)="toLoginPage()">Login</span>
         </ng-template>
 
-        <ng-template>
+        <ng-template [ngIf]="!(loggedInStatus | async)">
             <span class="logout-btn" (click)="logout()">Logout</span>
         </ng-template>
 </mat-toolbar>

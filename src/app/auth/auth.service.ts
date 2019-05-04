@@ -12,6 +12,7 @@ import { AppState } from '../reducers';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { isLoggedIn } from './auth.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -59,14 +60,12 @@ export class AuthService {
           .doc(credential.user.uid)
           .set({
             uid: credential.user.uid,
-            email: credential.user.email,
-            displayName: displayName
+            email: credential.user.email
           });
         this.store.dispatch(
           new Login({
             uid: credential.user.uid,
-            email: credential.user.email,
-            displayName: displayName
+            email: credential.user.email
           })
         );
         this.router.navigate(['/form']);
@@ -86,7 +85,6 @@ export class AuthService {
           new Login({ uid: credential.user.uid, email: credential.user.email })
         );
         this.router.navigate(['/form']);
-        console.log('Login successful');
       })
       .catch(() => alert('Login unsuccessful'));
   }
@@ -94,6 +92,5 @@ export class AuthService {
   logout() {
     this.store.dispatch(new Logout());
     this.afAuth.auth.signOut();
-    alert('Logout successful');
   }
 }
