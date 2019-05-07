@@ -3,7 +3,7 @@ import { AppState } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { isLoggedIn, isLoggedOut } from './auth/auth.selector';
+import { isLoggedIn, isLoggedOut } from './auth/store/auth.selector';
 
 
 @Component({

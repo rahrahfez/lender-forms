@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +18,8 @@ export class RegisterComponent implements OnInit {
       email: new FormControl(''),
       username: new FormControl(''),
       password: new FormControl(''),
-      confirmPassword: new FormControl('')
-    })
+      // confirmPassword: new FormControl('')
+    });
   }
 
   onRegister() {

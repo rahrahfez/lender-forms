@@ -1,50 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { RouterModule } from '@angular/router';
-
-import {
-  MatInputModule,
-  MatButtonModule,
-  MatFormFieldModule,
-  MatCardModule,
-  MatToolbarModule
- } from '@angular/material';
-
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { SubmitFormComponent } from './submit-form/submit-form.component';
-import { LoginComponent } from './login/login.component';
 import { reducers, metaReducers } from './reducers';
-import { routes } from './routes.module';
+import { RoutingModule } from './routes.module';
 import { DisplayUsersComponent } from './display-users/display-users.component';
 import { HeaderComponent } from './header/header.component';
-import { RegisterComponent } from './register/register.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { ChatComponent } from './chat/chat.component';
-import * as fromAuth from './auth/auth.reducer';
-import { AuthGuard } from './auth/auth.guard';
+import * as fromAuth from './auth/store/auth.reducer';
 import { TasksComponent } from './tasks/tasks.component';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './auth/auth.effects';
-
-
+import { AuthEffects } from './auth/store/auth.effects';
+import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
+import { AuthRoutingModule } from './auth/auth-routes.module';
+import { AuthService } from './services/auth.service';
+import { ChatService } from './services/chat.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SubmitFormComponent,
-    LoginComponent,
     DisplayUsersComponent,
     HeaderComponent,
-    RegisterComponent,
     ApplicationFormComponent,
     ChatComponent,
     TasksComponent
@@ -52,23 +38,25 @@ import { AuthEffects } from './auth/auth.effects';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.config),
-    AngularFireAuthModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatToolbarModule,
+    SharedModule,
+    AuthModule,
+    AuthRoutingModule,
+    RoutingModule,
+    FormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    RouterModule.forRoot(routes),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature('auth', fromAuth.authReducer),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([AuthEffects])
+    EffectsModule.forFeature([AuthEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService,
+    ChatService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -7,12 +7,11 @@ import {
 } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
-import { Login, Logout } from '../auth/auth.actions';
+import { Login, Logout } from '../auth/store/auth.actions';
 import { AppState } from '../reducers';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { User } from '../models/user.model';
-import { isLoggedIn } from './auth.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +25,22 @@ export class AuthService {
     private router: Router,
     private store: Store<AppState>
   ) {
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    this.user$ = this.afAuth.authState
+      .pipe(
+        switchMap(user => {
+          if (user) {
+            console.log(user);
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      );
+  }
+
+  getUser() {
+    return this.user$.pipe(
+      first()).toPromise();
   }
 
   updateUserData(user: User) {
@@ -48,7 +54,7 @@ export class AuthService {
       displayName: user.displayName
     };
 
-    return userRef.set(data);
+    return userRef.set(data, { merge: true });
   }
 
   signUp(email: string, password: string, displayName?: string) {
@@ -68,7 +74,7 @@ export class AuthService {
             email: credential.user.email
           })
         );
-        this.router.navigate(['/form']);
+        this.router.navigate(['/tasks']);
       })
       .catch(err => {
         console.log('Error', err.message);
@@ -84,7 +90,7 @@ export class AuthService {
         this.store.dispatch(
           new Login({ uid: credential.user.uid, email: credential.user.email })
         );
-        this.router.navigate(['/form']);
+        this.router.navigate(['/tasks']);
       })
       .catch(() => alert('Login unsuccessful'));
   }

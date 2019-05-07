@@ -13,7 +13,7 @@ import { AppState } from '../reducers';
 export class DisplayUsersComponent implements OnInit {
   applicationRef = this.afs.collection('applications');
   application$: Observable<any>;
-  
+
   constructor(private afs: AngularFirestore, private store: Store<AppState>) { }
 
   ngOnInit() {

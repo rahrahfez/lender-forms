@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { AngularFirestore } from 'angularfire2/firestore';
-
 
 @Component({
   selector: 'app-submit-form',
@@ -10,33 +6,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
   styleUrls: ['./submit-form.component.css']
 })
 export class SubmitFormComponent implements OnInit {
-  myForm: FormGroup;
-  
-  constructor(private afs: AngularFirestore, private fb: FormBuilder) { }
+
+  constructor() {}
 
   ngOnInit() {
-    this.myForm = this.fb.group({
-      firstName: [''],
-      lastName: ['']
-    })
+
   }
 
-  async submitFormHandler() {
-    const formValue = this.myForm.value;
-
-    try {
-      await this.afs.collection('applications').add(formValue);
-      console.log(formValue);
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-  get firstName() {
-    return this.myForm.get('firstName');
-  } 
-
-  get lastName() {
-    return this.myForm.get('lastName');
-  }
 }

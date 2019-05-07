@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 import { AuthActions, AuthActionTypes } from './auth.actions';
 
 export interface AuthState {

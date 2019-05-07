@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth/auth.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../reducers';
-import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +9,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
   constructor(private router: Router, public auth: AuthService) {}
-
-
 
   ngOnInit() {
 
@@ -26,6 +22,10 @@ export class HeaderComponent implements OnInit {
 
   toLoginPage() {
     this.router.navigate(['/login']);
+  }
+
+  toApplicationForm() {
+    this.router.navigate(['/application']);
   }
 
   logout() {

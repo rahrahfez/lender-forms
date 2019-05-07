@@ -1,0 +1,51 @@
+.form-section {
+    font-family: 'Ubuntu', sans-serif;
+    margin-left: 5rem;
+}
+
+.datepicker {
+    width: 100%;
+}
+
+.datepicker-input {
+    justify-content: end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.contact-information {
+    width: 100%;
+}
+
+.address-input {
+    width: 25rem;
+}
+
+.address-location-input {
+    width: 100%;
+}
+
+.address-input-field {
+    margin-right: 1rem;
+}
+
+.state-input-field {
+    margin-right: 1rem;
+    width: 5rem;
+}
+
+.zipcode-input-field {
+    width: 8rem;
+}
+
+.name-input-field {
+    margin-right: 1rem;
+}
+
+.submit-btn {
+    width: 10rem;
+}
