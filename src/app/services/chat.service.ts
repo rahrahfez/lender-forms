@@ -79,7 +79,7 @@ export class ChatService {
           return userDocs.length ? combineLatest(userDocs) : of([]);
         }),
         map(arr => {
-          arr.forEach(v => (joinKeys[(<any>v).uid] = v));
+          arr.forEach(v => (joinKeys[(v as any).uid] = v));
           chat.messages = chat.messages.map(v => {
             return { ...v, user: joinKeys[v.uid] };
           });

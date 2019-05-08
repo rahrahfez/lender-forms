@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-
-import { AppState } from '../reducers';
+import { Router } from '@angular/router';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-display-users',
@@ -14,10 +13,14 @@ export class DisplayUsersComponent implements OnInit {
   applicationRef = this.afs.collection('applications');
   application$: Observable<any>;
 
-  constructor(private afs: AngularFirestore, private store: Store<AppState>) { }
+  constructor(private afs: AngularFirestore, private router: Router, private cs: ChatService) { }
 
   ngOnInit() {
     this.application$ = this.applicationRef.valueChanges();
   }
 
+  onClick() {
+    this.cs.create();
+    this.router.navigate(['tasks', ])
+  }
 }

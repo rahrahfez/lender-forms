@@ -1,10 +1,12 @@
 <h1 class="app-header">Tasks</h1>
 <ul class="app-list">
   <li *ngFor="let application of application$ | async">
-    <mat-card class="user-card">
-        {{ application.firstName }} 
-        {{ application.lastName }}
-    </mat-card>
+    <a class="application-btn" (click)="onClick()">
+        <mat-card class="user-card">
+            {{ application.firstName }} 
+            {{ application.lastName }}
+        </mat-card>
+    </a>
   </li>
 </ul>
 <app-chat></app-chat>

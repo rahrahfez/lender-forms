@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
@@ -9,15 +9,16 @@ import { Store } from '@ngrx/store';
 
 import { Login, Logout } from '../auth/store/auth.actions';
 import { AppState } from '../reducers';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap, first } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   user$: Observable<User>;
+  subscription: Subscription;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -29,7 +30,6 @@ export class AuthService {
       .pipe(
         switchMap(user => {
           if (user) {
-            console.log(user);
             return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
           } else {
             return of(null);
@@ -39,8 +39,11 @@ export class AuthService {
   }
 
   getUser() {
-    return this.user$.pipe(
-      first()).toPromise();
+    return this.user$
+    .pipe(
+      first()
+      )
+      .toPromise();
   }
 
   updateUserData(user: User) {
@@ -53,11 +56,23 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName
     };
-
     return userRef.set(data, { merge: true });
   }
 
-  signUp(email: string, password: string, displayName?: string) {
+  getUserDisplayName(user: User): string {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${user.uid}`
+    );
+
+    let displayName = '';
+
+    this.subscription = userRef.get()
+      .subscribe(val => displayName = val.get('displayName'));
+
+    return displayName;
+  }
+
+  signUp(email: string, password: string, userDisplayName: string) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
@@ -66,15 +81,17 @@ export class AuthService {
           .doc(credential.user.uid)
           .set({
             uid: credential.user.uid,
-            email: credential.user.email
+            email: credential.user.email,
+            displayName: userDisplayName
           });
         this.store.dispatch(
           new Login({
             uid: credential.user.uid,
-            email: credential.user.email
+            email: credential.user.email,
+            displayName: userDisplayName
           })
         );
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/dashboard']);
       })
       .catch(err => {
         console.log('Error', err.message);
@@ -85,12 +102,16 @@ export class AuthService {
     this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.updateUserData(credential.user);
+        // this.updateUserData(credential.user);
 
         this.store.dispatch(
-          new Login({ uid: credential.user.uid, email: credential.user.email })
+          new Login({
+            uid: credential.user.uid,
+            email: credential.user.email,
+            displayName: this.getUserDisplayName(credential.user)
+          })
         );
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/dashboard']);
       })
       .catch(() => alert('Login unsuccessful'));
   }
@@ -98,5 +119,11 @@ export class AuthService {
   logout() {
     this.store.dispatch(new Logout());
     this.afAuth.auth.signOut();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

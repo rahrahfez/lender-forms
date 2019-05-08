@@ -11,3 +11,7 @@
     background-color: #eee;
     margin-bottom: .6rem;
 }
+
+.application-btn {
+    cursor: pointer;
+}

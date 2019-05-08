@@ -4,7 +4,7 @@
   <form class="form-group" [formGroup]="applicationForm" (ngSubmit)="submitFormHandler()">
     <div class="datepicker">
         <mat-form-field class="datepicker-input">
-          <input matInput [matDatepicker]="myDatePicker" placeholder="Date" formControlName="date">
+          <input matInput [matDatepicker]="myDatepicker" placeholder="Date" formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #myDatePicker></mat-datepicker>
         </mat-form-field>
