@@ -1,6 +1,13 @@
-<p>
-  dashboard works!
-</p>
-<app-tasks></app-tasks>
-<app-display-users></app-display-users>
-<app-chat></app-chat>
+<section class="dashboard-section">
+  <div class="sidebar-nav">
+    <app-sidebar-nav></app-sidebar-nav>
+  </div>
+  <div class="display-users-section">
+    <app-display-users></app-display-users>
+  </div>
+  <div class="chat-section">
+    <router-outlet></router-outlet>
+  </div>
+  <!-- <app-tasks></app-tasks> -->
+</section>
+

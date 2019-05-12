@@ -7,7 +7,7 @@ import { ChatService } from '../services/chat.service';
 @Component({
   selector: 'app-display-users',
   templateUrl: './display-users.component.html',
-  styleUrls: ['./display-users.component.css']
+  styleUrls: ['./display-users.component.scss']
 })
 export class DisplayUsersComponent implements OnInit {
   applicationRef = this.afs.collection('applications');
@@ -21,6 +21,6 @@ export class DisplayUsersComponent implements OnInit {
 
   onClick() {
     this.cs.create();
-    this.router.navigate(['tasks', ])
+    this.router.navigate(['tasks', ]);
   }
 }

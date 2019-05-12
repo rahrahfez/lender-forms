@@ -1,0 +1,28 @@
+.chat-window {
+    border: 1px solid black;
+    width: 60rem;
+    height: 30rem;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-msg {
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    border: 1px solid black;
+    padding: 2rem;
+}
+
+.chat-input {
+    width: 50rem;
+}
+
+.chat-btn {
+    margin-left: 2rem;
+}

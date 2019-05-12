@@ -1,14 +1,10 @@
-.form-section {
-    font-family: 'Ubuntu', sans-serif;
-    margin-left: 5rem;
-}
-
-.datepicker {
-    width: 100%;
+.application-form-section {
+    margin: 10rem auto;
+    width: 25rem;
 }
 
 .datepicker-input {
-    justify-content: end;
+    width: 5rem;
 }
 
 .form-group {
@@ -29,7 +25,8 @@
     width: 100%;
 }
 
-.address-input-field {
+.city-input-field {
+    width: 10rem;
     margin-right: 1rem;
 }
 
@@ -39,7 +36,7 @@
 }
 
 .zipcode-input-field {
-    width: 8rem;
+    width: 5rem;
 }
 
 .name-input-field {

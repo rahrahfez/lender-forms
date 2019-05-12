@@ -1,4 +1,4 @@
-<section class="form-section">
+<section class="application-form-section">
   <h2>Primary Contact Information</h2>
 
   <form class="form-group" [formGroup]="applicationForm" (ngSubmit)="submitFormHandler()">
@@ -6,7 +6,7 @@
         <mat-form-field class="datepicker-input">
           <input matInput [matDatepicker]="myDatepicker" placeholder="Date" formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-          <mat-datepicker #myDatePicker></mat-datepicker>
+          <mat-datepicker #myDatepicker></mat-datepicker>
         </mat-form-field>
     </div>
     <div class="contact-information">
@@ -23,7 +23,7 @@
       </mat-form-field>
     </div>
     <div class="address-location-input">
-      <mat-form-field class="address-input-field">
+      <mat-form-field class="city-input-field">
         <input matInput placeholder="City" formControlName="city">
       </mat-form-field>
       <mat-form-field class="state-input-field">
@@ -37,7 +37,6 @@
       <mat-form-field class="zipcode-input-field">
         <input matInput placeholder="Zip Code" formControlName="zipcode">
       </mat-form-field>
-
     </div>
     <button class="submit-btn" type="submit" mat-raised-button color="primary">Submit Form</button>
   </form>

@@ -1,4 +1,4 @@
-<section class="register-section container">
+<section class="register-section">
   <mat-card class="register-card">
     <mat-card-title>Register</mat-card-title>
       <form class="form-input" [formGroup]="registerForm">
@@ -8,7 +8,7 @@
           <mat-form-field>
             <input matInput placeholder="Email" formControlName="email">
           </mat-form-field>
-          <mat-form-field hintLabel="Password should be 6 characters long.">
+          <mat-form-field>
             <input matInput placeholder="Password" formControlName="password" type="password">
           </mat-form-field>
           <!-- <mat-form-field>

@@ -10,7 +10,7 @@ export interface States {
 @Component({
   selector: 'app-application-form',
   templateUrl: './application-form.component.html',
-  styleUrls: ['./application-form.component.css']
+  styleUrls: ['./application-form.component.scss']
 })
 export class ApplicationFormComponent implements OnInit {
   applicationForm: FormGroup;
@@ -39,8 +39,8 @@ export class ApplicationFormComponent implements OnInit {
 
     try {
       await this.afs.collection('applications').add(formValue);
-      alert('Form Submitted');
       this.applicationForm.reset();
+      alert('Form Submitted');
     } catch (err) {
       console.log(err);
     }
