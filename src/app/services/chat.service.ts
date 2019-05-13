@@ -3,17 +3,19 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
 import { firestore } from 'firebase';
 import { Observable, of, combineLatest } from 'rxjs';
-
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-
-  constructor(private afs: AngularFirestore, private auth: AuthService, private router: Router) { }
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   get(chatId: string) {
     return this.afs
@@ -28,7 +30,7 @@ export class ChatService {
   }
 
   async create() {
-    const { uid } = await this.auth.getUser();
+    const { uid } = await this.userService.getUser();
 
     const data = {
       uid,
@@ -39,11 +41,11 @@ export class ChatService {
 
     const docRef = await this.afs.collection('chats').add(data);
 
-    return this.router.navigate(['tasks', docRef.id]);
+    return this.router.navigate(['_', docRef.id]);
   }
 
   async sendMessage(chatId: string, content: string) {
-    const { uid } = await this.auth.getUser();
+    const { uid } = await this.userService.getUser();
 
     const data = {
       uid,
@@ -64,9 +66,9 @@ export class ChatService {
     let chat;
     const joinKeys = {};
 
-    return chat$
-      .pipe(
-        switchMap((c): Observable<any> => {
+    return chat$.pipe(
+      switchMap(
+        (c): Observable<any> => {
           // unique User IDs
           chat = c;
           const uids = Array.from(new Set(c.messages.map(v => v.uid)));
@@ -77,15 +79,16 @@ export class ChatService {
           );
 
           return userDocs.length ? combineLatest(userDocs) : of([]);
-        }),
-        map(arr => {
-          arr.forEach(v => (joinKeys[(v as any).uid] = v));
-          chat.messages = chat.messages.map(v => {
-            return { ...v, user: joinKeys[v.uid] };
-          });
+        }
+      ),
+      map(arr => {
+        arr.forEach(v => (joinKeys[(v as any).uid] = v));
+        chat.messages = chat.messages.map(v => {
+          return { ...v, user: joinKeys[v.uid] };
+        });
 
-          return chat;
-        })
-      );
+        return chat;
+      })
+    );
   }
 }

@@ -1,76 +1,23 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument
-} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
 import { Login, Logout } from '../auth/store/auth.actions';
 import { AppState } from '../reducers';
-import { Observable, of, Subscription } from 'rxjs';
-import { switchMap, first } from 'rxjs/operators';
-import { User } from '../models/user.model';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnDestroy {
-  user$: Observable<User>;
-  subscription: Subscription;
+export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router,
-    private store: Store<AppState>
-  ) {
-    this.user$ = this.afAuth.authState
-      .pipe(
-        switchMap(user => {
-          if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-          } else {
-            return of(null);
-          }
-        })
-      );
-  }
-
-  getUser() {
-    return this.user$
-    .pipe(
-      first()
-      )
-      .toPromise();
-  }
-
-  updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
-
-    const data: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName
-    };
-    return userRef.set(data, { merge: true });
-  }
-
-  getUserDisplayName(user: User): string {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
-
-    let displayName = '';
-
-    this.subscription = userRef.get()
-      .subscribe(val => displayName = val.get('displayName'));
-
-    return displayName;
-  }
+    private store: Store<AppState>,
+    private userService: UserService
+  ) {}
 
   signUp(email: string, password: string, userDisplayName: string) {
     this.afAuth.auth
@@ -91,7 +38,6 @@ export class AuthService implements OnDestroy {
             displayName: userDisplayName
           })
         );
-        this.router.navigate(['/dashboard']);
       })
       .catch(err => {
         console.log('Error', err.message);
@@ -99,19 +45,19 @@ export class AuthService implements OnDestroy {
   }
 
   login(email: string, password: string) {
+    // TODO: Get displayName from userService here <!!!!!>
+
     this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        // this.updateUserData(credential.user);
-
+        this.userService.getUserDisplayName(credential.user);
         this.store.dispatch(
           new Login({
             uid: credential.user.uid,
             email: credential.user.email,
-            displayName: this.getUserDisplayName(credential.user)
+            displayName: this.userService.getusername()
           })
         );
-        this.router.navigate(['/dashboard']);
       })
       .catch(() => alert('Login unsuccessful'));
   }
@@ -119,11 +65,5 @@ export class AuthService implements OnDestroy {
   logout() {
     this.store.dispatch(new Logout());
     this.afAuth.auth.signOut();
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

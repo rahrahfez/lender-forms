@@ -20,7 +20,6 @@ export class DisplayUsersComponent implements OnInit {
   }
 
   onClick() {
-    this.cs.create();
-    this.router.navigate(['tasks', ]);
+    
   }
 }

@@ -9,26 +9,26 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { EffectsModule } from '@ngrx/effects';
 
+import { reducers, metaReducers } from './reducers';
+import * as fromAuth from './auth/store/auth.reducer';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { reducers, metaReducers } from './reducers';
 import { AppRoutingModule } from './app.routes.module';
 import { HeaderComponent } from './header/header.component';
+import { RegisterComponent } from './register/register.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
-import * as fromAuth from './auth/store/auth.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './services/auth.service';
 import { ChatService } from './services/chat.service';
-import { RegisterComponent } from './register/register.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ApplicationFormComponent,
-    RegisterComponent,
-    
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -46,12 +46,7 @@ import { RegisterComponent } from './register/register.component';
     EffectsModule.forFeature([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [
-    AuthService,
-    ChatService
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  providers: [AuthService, ChatService, UserService],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

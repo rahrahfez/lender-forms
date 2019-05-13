@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+
 import { ChatService } from '../services/chat.service';
-import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +14,7 @@ export class ChatComponent implements OnInit {
   chat$: Observable<any>;
   newMsg: string;
 
-  constructor(private cs: ChatService, private route: ActivatedRoute, private auth: AuthService) { }
+  constructor(private cs: ChatService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const chatId = this.route.snapshot.paramMap.get('id');
