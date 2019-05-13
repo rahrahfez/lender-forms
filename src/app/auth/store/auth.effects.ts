@@ -14,7 +14,8 @@ export class AuthEffects {
         .pipe(
             ofType<Login>(AuthActionTypes.LoginAction),
             tap(action =>
-                localStorage.setItem('user', JSON.stringify(action.payload)))
+                localStorage.setItem('user', JSON.stringify(action.payload))
+            )
         );
 
     @Effect({ dispatch: false })

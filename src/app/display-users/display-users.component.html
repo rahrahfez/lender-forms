@@ -1,5 +1,5 @@
-<div class="display-tasks-section">
-  <h1 class="app-header">Tasks</h1>
+<mat-card class="display-tasks-section">
+  <mat-card-title class="app-header">Applications</mat-card-title>
   <ul class="app-list">
     <li *ngFor="let application of application$ | async">
       <a class="application-btn" (click)="onClick()">
@@ -10,4 +10,4 @@
       </a>
     </li>
   </ul>
-</div>
+</mat-card>

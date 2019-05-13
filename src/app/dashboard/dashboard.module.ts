@@ -7,6 +7,8 @@ import { DashboardRoutingModule } from './dashboard.routes.module';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { UserCardComponent } from '../user-card/user-card.component';
+import { MatSidenavModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -14,11 +16,13 @@ import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
         TasksComponent,
         DisplayUsersComponent,
         ChatComponent,
-        SidebarNavComponent
+        SidebarNavComponent,
+        UserCardComponent
     ],
     imports: [
         SharedModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        MatSidenavModule
     ]
 })
 export class DashboardModule { }

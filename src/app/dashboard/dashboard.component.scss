@@ -1,9 +1,7 @@
-.sidebar-nav {
-    padding: 0;
-}
-
 .dashboard-section {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     height: 100vh;
+    background-color: #ddd;
 }

@@ -1,13 +1,14 @@
 .app-list {
     list-style: none;
+    padding: 0;
 }
 
 .app-header {
-    margin-left: 5rem;
+    margin-left: 1rem;
 }
 
 .user-card {
-    width: 40%;
+    width: auto;
     background-color: #eee;
     margin-bottom: .6rem;
 }
@@ -17,6 +18,7 @@
 }
 
 .display-tasks-section {
-    margin: 0;
-    width: 50rem;
+    border-radius: 15px;
+    margin: 1rem 3rem;
+    width: 30rem;
 }
