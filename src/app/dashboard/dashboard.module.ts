@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { MatSidenavModule } from '@angular/material';
+import { ViewApplicationComponent } from '../view-application/view-application.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { MatSidenavModule } from '@angular/material';
         DisplayUsersComponent,
         ChatComponent,
         SidebarNavComponent,
-        UserCardComponent
+        UserCardComponent,
+        ViewApplicationComponent
     ],
     imports: [
         SharedModule,

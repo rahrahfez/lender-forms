@@ -8,7 +8,9 @@ import {
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule
     } from '@angular/material';
 
 import { CommonModule } from '@angular/common';
@@ -24,7 +26,9 @@ import { CommonModule } from '@angular/common';
         MatToolbarModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatSelectModule
+        MatSelectModule,
+        MatMenuModule,
+        MatIconModule
     ],
     exports: [
         MatFormFieldModule,
@@ -34,7 +38,9 @@ import { CommonModule } from '@angular/common';
         MatToolbarModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatSelectModule
+        MatSelectModule,
+        MatMenuModule,
+        MatIconModule
     ]
 })
 export class MaterialModule { }

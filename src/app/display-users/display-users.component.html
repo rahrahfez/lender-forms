@@ -2,7 +2,7 @@
   <mat-card-title class="app-header">Applications</mat-card-title>
   <ul class="app-list">
     <li *ngFor="let application of application$ | async">
-      <a class="application-btn" (click)="onClick()">
+      <a class="application-btn">
           <mat-card class="user-card">
               {{ application.firstName }} 
               {{ application.lastName }}

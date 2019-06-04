@@ -16,12 +16,6 @@
     font-weight: 300;
 }
 
-.logout-btn {
-    cursor: pointer;
-    margin-right: 2rem;
-    font-weight: 300;
-}
-
 .nav-brand {
     font-size: 1.7rem;
     margin-left: 2rem;
@@ -37,4 +31,9 @@
     font-size: 1rem;
     display: flex;
     flex-direction: row;
+}
+
+.menu-icon {
+    cursor: pointer;
+    color: white;
 }

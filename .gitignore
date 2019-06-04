@@ -9,7 +9,8 @@
 
 # dependencies
 /node_modules
-/src/environments/environments.ts
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
 
 # profiling files
 chrome-profiler-events.json
@@ -41,6 +42,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/Website_MockUps
 
 # System Files
 .DS_Store
