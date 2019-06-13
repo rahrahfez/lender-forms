@@ -2,12 +2,22 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
-import { Login, AuthActionTypes, Logout } from './auth.actions';
+import { Login, AuthActionTypes, Logout, Signup } from './auth.actions';
 import { Router } from '@angular/router';
 import { of, defer, Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class AuthEffects {
+  @Effect({dispatch: false})
+  signup$ = this.actions$.pipe(
+    ofType<Signup>(AuthActionTypes.SignupAction),
+    tap(action => {
+      localStorage.setItem('user', JSON.stringify(action.payload));
+      this.router.navigate(['/dashboard']);
+    })
+  );
+
   @Effect({ dispatch: false })
   login$ = this.actions$.pipe(
     ofType<Login>(AuthActionTypes.LoginAction),
@@ -23,6 +33,7 @@ export class AuthEffects {
     tap(() => {
       localStorage.removeItem('user');
       this.router.navigate(['/login']);
+      this.afAuth.auth.signOut();
     })
   );
 
@@ -39,5 +50,5 @@ export class AuthEffects {
     }
   );
 
-  constructor(private actions$: Actions, private router: Router) {}
+  constructor(private actions$: Actions, private router: Router, private afAuth: AngularFireAuth) {}
 }

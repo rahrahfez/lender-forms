@@ -8,12 +8,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./display-users.component.scss']
 })
 export class DisplayUsersComponent implements OnInit {
-  applicationRef = this.afs.collection('applications');
   application$: Observable<any>;
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit() {
-    this.application$ = this.applicationRef.valueChanges();
+    this.application$ = this.afs.collection('applications').valueChanges();
   }
 }

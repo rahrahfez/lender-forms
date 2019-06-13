@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
-import { Login, Logout } from '../auth/store/auth.actions';
+import { Login, Logout, Signup } from '../auth/store/auth.actions';
 import { AppState } from '../reducers';
 
 @Injectable({
@@ -17,6 +17,14 @@ export class AuthService {
   ) {}
 
   signUp(email: string, password: string, userDisplayName: string) {
+    /**
+     * First creates a new user for Firebase with email, password.
+     * Then updates the profile to update displayName.
+     * Once that is complete, it then creates a new user on the database.
+     * Then stores that user in ngrx/store.
+     * 
+     * TODO: move the api call to an ngrx/effect instead.
+     */
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
@@ -35,7 +43,7 @@ export class AuthService {
               });
 
             this.store.dispatch(
-              new Login({
+              new Signup({
                 uid: credential.user.uid,
                 email: credential.user.email,
                 displayName: credential.user.displayName
@@ -65,6 +73,5 @@ export class AuthService {
 
   logout() {
     this.store.dispatch(new Logout());
-    this.afAuth.auth.signOut();
   }
 }

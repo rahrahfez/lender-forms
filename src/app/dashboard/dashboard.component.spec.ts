@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 import { DisplayUsersComponent } from '../display-users/display-users.component';
 import { UserCardComponent } from '../user-card/user-card.component';
-import { ViewApplicationComponent } from '../view-application/view-application.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashboardComponent', () => {
@@ -20,8 +19,7 @@ describe('DashboardComponent', () => {
         DashboardComponent,
         SidebarNavComponent,
         DisplayUsersComponent,
-        UserCardComponent,
-        ViewApplicationComponent
+        UserCardComponent
       ],
       imports: [
         CommonServiceModule,

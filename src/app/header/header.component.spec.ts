@@ -3,6 +3,9 @@ import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { HeaderComponent } from './header.component';
+import { CommonServiceModule } from 'testing/CommonService.module';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatMenuModule } from '@angular/material';
 
 
 describe('HeaderComponent', () => {
@@ -14,7 +17,14 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HeaderComponent ],
-      providers: [ provideMockStore({ initialState })]
+      providers: [ provideMockStore({ initialState })],
+      imports: [
+        CommonServiceModule,
+        MatMenuModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
 

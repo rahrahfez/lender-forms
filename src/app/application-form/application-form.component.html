@@ -38,6 +38,6 @@
         <input matInput placeholder="Zip Code" formControlName="zipcode">
       </mat-form-field>
     </div>
-    <button class="submit-btn" type="submit" mat-raised-button color="primary">Submit Form</button>
+    <button class="submit-btn" type="submit" mat-raised-button color="primary" [disabled]="!applicationForm.valid">Submit Form</button>
   </form>
 </section>

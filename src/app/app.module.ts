@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService } from './services/auth.service';
 import { ChatService } from './services/chat.service';
 import { UserService } from './services/user.service';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,12 @@ import { UserService } from './services/user.service';
     EffectsModule.forFeature([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [AuthService, ChatService, UserService],
+  providers: [
+    AuthService,
+    ChatService,
+    UserService,
+    DatabaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

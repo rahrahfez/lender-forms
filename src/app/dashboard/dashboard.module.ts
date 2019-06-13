@@ -9,17 +9,15 @@ import { DashboardComponent } from './dashboard.component';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { MatSidenavModule } from '@angular/material';
-import { ViewApplicationComponent } from '../view-application/view-application.component';
 
 @NgModule({
     declarations: [
         DashboardComponent,
         TasksComponent,
         DisplayUsersComponent,
-        ChatComponent,
+        // ChatComponent,
         SidebarNavComponent,
-        UserCardComponent,
-        ViewApplicationComponent
+        UserCardComponent
     ],
     imports: [
         SharedModule,
